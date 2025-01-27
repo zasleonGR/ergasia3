@@ -62,7 +62,8 @@ int main(int argc, char const *argv[]) {
 
   for (int i = 0; i < CLIENTS; i++){
     printf("\n\nClient: %d\n\n", i+1);
-    for (int y=0 ;y<ORDERS ;y++) {
+    int y = 0;
+   while (y<ORDERS && error_flag == 0) {
       pid_t pid = fork();
       random_item = rand() % (MAX_ITEMS); // Generate random item
       if (pid == 0) {//Child process sends order to server
@@ -78,7 +79,7 @@ int main(int argc, char const *argv[]) {
         exit(1);
       }
     
-             
+       j++;      
    }
   }
   for (int i = 0; i < ORDERS; i++) {//Wait for process to finish
