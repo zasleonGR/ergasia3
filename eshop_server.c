@@ -14,9 +14,9 @@
 double total_profit = 0.0;
 int sucs_orders = 0;
 int failed_orders = 0;
+int error_flag = 0;
 
 double total_price; 
-int error_flag;
 int sucs_request;
 int failed_request;
 int item_number;
@@ -126,7 +126,8 @@ int main() {
     printf("Server is listening on port 8080...\n\n");
 
     for (int i = 0; i < MAX_CLIENTS; i++){
-        for (int j = 0; j < ORDERS; j++){
+        int j = 0;
+        while (j < ORDERS && error_flag == 0){
             
             // Accept connection
             if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t *)&addrlen)) < 0) {
@@ -142,7 +143,8 @@ int main() {
            
             write(new_socket, &error_flag, sizeof(int));//stellnoume apantisi 
            
-        close(new_socket);
+            close(new_socket);
+            j++;
         }
         print_result(i+1, total_price, error_flag);
         
