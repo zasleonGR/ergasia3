@@ -6,7 +6,7 @@
 #include <time.h>
 //Constast variables
 
-#define CLIENTS 5       
+#define MAX_CLIENTS 5       
 #define MAX_ITEMS 20
 #define ORDERS 10
 
@@ -14,7 +14,7 @@
 double total_profit = 0.0;
 int sucs_orders = 0;
 int failed_orders = 0;
-int random_item;
+
 double total_price; 
 int error_flag;
 int sucs_request;
@@ -65,25 +65,18 @@ void initialize_prices() {
 }
 
 int process_order(int item_number) {
-    
-    
-    
-    sleep(0.5);
-
+    sleep(0.5);//Order takes 0.5secs to be proccsed
     if (catalog[item_number].item_count > 0) {
         catalog[item_number].item_count--; 
         total_price = catalog[item_number].price; 
         error_flag = 0; // Order successful
         sucs_orders++;
-        
     } else {
         error_flag = 1; // Order failed
-        failed_orders++;
-        
+        failed_orders++ ;  
     }
     return error_flag;
 }
-
 
 
 
@@ -94,7 +87,7 @@ int main() {
     int server_fd, new_socket;
     struct sockaddr_in address;
     int addrlen = sizeof(address);
-    char buffer[1024] = {0};
+    
     
     
     initialize_catalog(); //We initalize the catalog (and the prices of the items etc)
@@ -132,30 +125,29 @@ int main() {
 
     printf("Server is listening on port 8080...\n\n");
 
-    for (int i=0; i<CLIENTS; i++) {
+    for (int i = 0; i < MAX_CLIENTS; i++){
+        for (int j = 0; j < ORDERS; j++){
+            
+            // Accept connection
+            if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t *)&addrlen)) < 0) {
+                perror("Accept failed");
+                close(server_fd);
+                exit(EXIT_FAILURE);
+            }
+            
+            // Read and respond to client
+            read(new_socket, &item_number, sizeof(int)); //diabazoume ton arithmo proinots apo ton client
+            printf("Received item: %d\n", item_number);
+            process_order(item_number);
+           
+            write(new_socket, &error_flag, sizeof(int));//stellnoume apantisi 
+           
+        close(new_socket);
+        }
+        print_result(i+1, total_price, error_flag);
         
-    // Accept connection
-    if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t *)&addrlen)) < 0) {
-        perror("Accept failed");
-        close(server_fd);
-        exit(EXIT_FAILURE);
     }
 
-    // Read and respond to client
-    read(new_socket, &item_number, sizeof(int)); //diabazoume ton arithmo proinots apo ton client
-    printf("Received item: %d\n", item_number);
-    process_order(item_number);
-    
-    
-    write(new_socket, &error_flag, sizeof(int));//stellnoume apantisi 
-    
-    print_result(i+1, total_price, error_flag);
-    }
-
-    // Cleanup
-    close(new_socket);
-    close(server_fd);
-    
     end_results_print(sucs_orders, failed_orders, total_profit, sucs_request, failed_request);
     
     
