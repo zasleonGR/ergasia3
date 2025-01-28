@@ -12,16 +12,6 @@
 #define ORDERS 10
 #define PORT 8080
 
-//Global variables
-double total_profit = 0.0;
-int sucs_orders = 0;
-int failed_orders = 0;
-double total_price; 
-int error_flag;
-int sucs_request;
-int failed_request;
-int item_number;
-int not_complete_orders;
 
 void print_result(int Client, double Final_price, int flag,int n_c_o) {
     printf("Client %d:", Client);
