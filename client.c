@@ -56,7 +56,7 @@ int Send_Order(int random_item){
 int main(int argc, char const *argv[]) {
   srand(time(NULL)); // Seed the random number generator once at the start
 
-  for (int i = 0; i < CLIENTS; i++){
+  for (int i = 0; i < MAX_CLIENTS; i++){
     printf("\n\nClient: %d\n\n", i+1);
     for (int y=0 ;y<ORDERS ;y++) {
       pid_t pid = fork();
