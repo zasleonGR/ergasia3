@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <time.h>
+#include "eshopFunctions.h"
 
 
 //Global variables
