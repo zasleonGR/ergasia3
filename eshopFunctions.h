@@ -9,6 +9,8 @@
 #define MAX_CLIENTS 5       
 #define MAX_ITEMS 20
 #define ORDERS 10
+#define CLIENTS 5 
+#define PORT 8080
 
 //Global variables
 double total_profit = 0.0;
