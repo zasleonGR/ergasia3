@@ -44,14 +44,6 @@ void end_results_print(int s_o,int f_o,double t_p,int s_r,int f_r){
     printf("%d requests were made,where %d succeeded and %d failed\n", sucs_request+failed_request, sucs_request, failed_request);
 }
 
-struct Product {
-    char description[100];
-    double price;
-    int item_count;
-};
-
-struct Product catalog[MAX_ITEMS]; //initialization of the catalog
-
 
 void initialize_catalog() {
     for (int i = 0; i < MAX_ITEMS; i++) {
