@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <time.h>
+#include <sys/socket.h> 
 //Constast variables
 
 #define MAX_CLIENTS 5       
