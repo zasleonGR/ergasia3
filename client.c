@@ -6,6 +6,7 @@
 #include <unistd.h> // getpid, getppid, fork
 #include <string.h> // bzero
 #include <time.h>
+#include "eshopFunctions.h"
 
 
 //Global variables
