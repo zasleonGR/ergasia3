@@ -12,6 +12,7 @@ eshop_server.o: eshop_server.c
 client: client.o
   echo "Compiling and creating client......"
   gcc client.o -o client
+  chmod +x client
 
 client.o: client.c
   echo "Compiling client......"
